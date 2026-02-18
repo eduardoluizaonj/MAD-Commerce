@@ -7,7 +7,7 @@ const navLinks = document.querySelector('.nav-links');
 if (menuToggle) {
   menuToggle.addEventListener('click', () => {
     navLinks.classList.toggle('active');
-    
+
     // Animate burger icon
     const spans = menuToggle.querySelectorAll('span');
     if (navLinks.classList.contains('active')) {
@@ -26,7 +26,7 @@ if (menuToggle) {
 document.querySelectorAll('.nav-links a').forEach(link => {
   link.addEventListener('click', () => {
     navLinks.classList.remove('active');
-    
+
     // Reset burger icon
     if (menuToggle) {
       const spans = menuToggle.querySelectorAll('span');
@@ -63,9 +63,56 @@ window.addEventListener('scroll', () => {
   } else {
     navbar.style.background = 'rgba(12, 12, 12, 0.9)';
     navbar.style.padding = '24px 0';
-    
+
     if (window.innerWidth <= 768) {
-       // Keep mobile nav distinctive if needed, but the base style covers it
+      // Keep mobile nav distinctive if needed, but the base style covers it
     }
   }
 });
+
+// Contact Form Handler
+const form = document.getElementById('contact-form');
+const result = document.getElementById('result');
+
+if (form) {
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+
+    result.innerHTML = "Please wait...";
+
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: json
+    })
+      .then(async (response) => {
+        let json = await response.json();
+        if (response.status == 200) {
+          result.innerHTML = "Message sent successfully!";
+          result.style.color = "#4BB543"; // Success Green
+          form.reset();
+        } else {
+          console.log(response);
+          result.innerHTML = json.message;
+          result.style.color = "#ff3333"; // Error Red
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        result.innerHTML = "Something went wrong!";
+        result.style.color = "#ff3333";
+      })
+      .then(function () {
+        form.classList.remove('was-validated');
+        setTimeout(() => {
+          result.style.display = "none";
+        }, 5000);
+      });
+  });
+}

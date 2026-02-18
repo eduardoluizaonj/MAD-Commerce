@@ -170,9 +170,24 @@
   <section id="contact" class="section contact-section">
     <div class="container contact-content">
       <h2 class="fade-up">Ready to Scale?</h2>
-      <p class="fade-up delay-1">Interested in working with MAD Commerce? Let’s discuss how we can grow your brand on
-        Amazon — strategically and responsibly.</p>
-      <a href="mailto:info@madcommerce.com" class="btn btn-primary btn-lg fade-up delay-2">Contact Us</a>
+      <p class="fade-up delay-1">Interested in working with MAD Commerce? Fill out the form below to discuss how we can
+        grow your brand on Amazon.</p>
+
+      <form id="contact-form" class="fade-up delay-2">
+        <input type="hidden" name="access_key" value="30d61031-6981-4b8f-b3fc-8fdde8e636f5">
+
+        <div class="form-group">
+          <input type="text" name="name" placeholder="Your Name" required>
+        </div>
+        <div class="form-group">
+          <input type="email" name="email" placeholder="Your Email" required>
+        </div>
+        <div class="form-group">
+          <textarea name="message" rows="5" placeholder="How can we help you?" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+        <div id="result"></div>
+      </form>
     </div>
   </section>
 
